@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Traffic Control Simulator</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      body {
+        background-color: #aaaaaa;
+      }
+      canvas {
+        background: black;
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+      #command-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+      }
+      #command-input {
+        width: 300px;
+        padding: 5px;
+      }
+      #submit-command {
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="airTrafficCanvas"></canvas>
+    <div id="command-container">
+      <select id="aircraft-select">
+        <!-- Options will be populated dynamically -->
+      </select>
+      <input
+        type="text"
+        id="command-input"
+        placeholder="Enter command (e.g., 'turn right heading 270')"
+      >
+      <button id="submit-command">Submit</button>
+    </div>
+    <script src="atc.js"></script>
+    <script>
+      window.addEventListener('resize', resizeCanvas)
+      function resizeCanvas() {
+        const canvas = document.getElementById('airTrafficCanvas')
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+      }
+      resizeCanvas() // Initial call to set the size on page load
+
+      document
+        .getElementById('command-input')
+        .addEventListener('keypress', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            document.getElementById('submit-command').click()
+          }
+        })
+    </script>
+  </body>
+</html>
