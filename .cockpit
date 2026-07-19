@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ $1 != "go" ]]; then
+  exec $SHELL
+fi
+
+if tmux list-sessions | grep -q "^ATC:"; then
+  tmux attach-session -t "ATC:"
+else
+  tmux new-session -d -s ATC -n "Web Server" -d
+  tmux send-keys -t ATC: "python -m http.server 8000" Enter
+
+  tmux new-window -t ATC: -n "Neovim"
+  tmux send-keys -t ATC: "nvim index.html" Enter
+
+  tmux attach -tATC
+
+fi
