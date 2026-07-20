@@ -13,11 +13,11 @@ const radar = new Radar('airTrafficCanvas', airport)
 
 // prettier-ignore
 radar.addAirplane(
-  new Airplane( airlines[0], 123, aircraftTypes['Airbus A320neo'], new Position(-20, -20), 135, 300, 12000)
+  new Airplane( airlines[0], 123, aircraftTypes['Airbus A320neo'], new Position(-5, -5), 135, 300, 12000)
 )
 // prettier-ignore
 radar.addAirplane(
-  new Airplane( airlines[3], 404, aircraftTypes['Boeing 737-800'], new Position(-20, -20), 315, 240, 11000)
+  new Airplane( airlines[3], 404, aircraftTypes['Boeing 737-800'], new Position(-5, -5), 315, 240, 11000)
 )
 // prettier-ignore
 radar.addAirplane(
@@ -33,6 +33,11 @@ function canvasResized() {
   radar.resize()
   radar.draw()
 }
+
+window.addEventListener('click', function (event) {
+  if (event.target.hasAttribute('data-zoom-in')) radar.zoomIn()
+  if (event.target.hasAttribute('data-zoom-out')) radar.zoomOut()
+})
 
 window.addEventListener('resize', canvasResized)
 requestAnimationFrame(canvasResized)

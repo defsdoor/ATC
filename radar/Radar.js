@@ -8,12 +8,29 @@ export class Radar {
     this.airport = airport
 
     this.canvas = document.getElementById(canvasID)
+
+    this.canvas.dataset.radar = this
     this.labelContainer = document.getElementById('aircraftLabels')
     this.ctx = this.canvas.getContext('2d')
     this.airplanes = []
 
     this.gameTime = 0
     this.lastLabelUpdate = -1
+  }
+
+  zoomIn() {
+    if (this.radarRange > 20) {
+      this.radarRange -= 10
+      this.updateCanvasScale()
+    }
+    console.log(this.radarRange)
+  }
+  zoomOut() {
+    if (this.radarRange < 60) {
+      this.radarRange += 10
+      this.updateCanvasScale()
+    }
+    console.log(this.radarRange)
   }
 
   update(deltaSeconds) {
@@ -71,7 +88,9 @@ export class Radar {
   }
 
   updateCanvasScale() {
-    this.pixelsPerNm = Math.min(this.width, this.height) / this.radarWidth
+    this.pixelsPerNm =
+      (Math.min(this.width, this.height) / this.radarWidth) *
+      (60 / this.radarRange)
 
     this.positionOnCanvas = {
       x: this.width / 2,
@@ -378,8 +397,8 @@ export class Radar {
     const left = this.worldToCanvasScale(leftEnd)
     const right = this.worldToCanvasScale(rightEnd)
 
-    ctx.strokeStyle = 'yellow'
-    ctx.setLineDash([2, 2])
+    ctx.strokeStyle = '#AAAA66'
+    ctx.setLineDash([8, 8])
 
     ctx.beginPath()
 
